@@ -66,7 +66,7 @@ nom_usuario = input("\nIngrese su nombre de usuario: ")
 
 #if para ver si el nombre de usuario ya es parta de la base de datos o no
 if nom_usuario in listaUs:
-    print("\nBienvendio de nuevo", nom_usuario,"!")
+    print("\nBienvendio de nuevo", nom_usuario+"!")
 else:
     crearUs = session.run("CREATE (p:Usuario {titulo:'"+nom_usuario+"'})") #agregando el nombre de usuario al nodo
     print("\nBienvenido a la familia", nom_usuario,", ahora mismo te agregamos a la base de datos!")
@@ -111,11 +111,70 @@ while True:
             else:
                 print('\nIngrese valores solamente entre 1 y 5.\n')
 
-        print(listaGen[op-1])
+        print("\n"+listaGen[op-1]+":")
         #creando un listado de las peliculas correspondientes al genero
-        pelisPorGen = session.run("MATCH (a:Pelicula)-[:es_genero]->(b:Genero {titulo:'"+listaGen[op-1]+"'}) return a.titulo")
+        pelisPorGen = session.run("MATCH (a:Pelicula)-[r:es_genero]->(b:Genero {titulo:'"+listaGen[op-1]+"'}) return a.titulo")
         listaPelisPorGen = [nodo["a.titulo"] for nodo in pelisPorGen]
-        print(listaPelisPorGen)
+        
+        for number, pelicula in enumerate(listaPelisPorGen): #imprimiendo los generos como listado
+            print(number+1, pelicula)
+        print("\nSeleccione la pelicula a recomendar:")
+
+
+        #haciendo un while para asegurar que se elija la opcion correcta
+        op1 = 0
+        ops1 = False
+        while not ops1:
+            try:
+                op1 = int(input("Pelicula> "))
+            #usar un except para asegurarnos que si el usuario ingresa letras, el código no parara abruptamente    
+            except ValueError:
+                print('\nIngrese solo numeros!\n')
+            #usar un if para asegurarnos que el usuario solo ponga un numero del 1-tamano de la lista   
+            if op1 >=1 and op1 <=len(listaPelisPorGen):
+                ops1 = True
+            else:
+                print('\nNumero fuera de Rango.\n')
+
+        print("\nHa seleccionado la pelicula: "+listaPelisPorGen[op1-1]+", que rating le da (1-5):")
+
+
+        op2 = 0
+        ops2 = False
+        while not ops2:
+            try:
+                op2 = int(input("Rating> "))
+            #usar un except para asegurarnos que si el usuario ingresa letras, el código no parara abruptamente    
+            except ValueError:
+                print('\nIngrese solo numeros!\n')
+            #usar un if para asegurarnos que el usuario solo ponga un numero del 1-5    
+            if op2 >=1 and op2 <=5:
+                ops2 = True
+            else:
+                print('\nIngrese valores solamente entre 1 y 5.\n')
+
+        print("\nLe has dado un rating de "+str(op2)+", a "+listaPelisPorGen[op1-1]+".")
+        
+        #haciendo el rating en neo4j
+        darRating = session.run("MATCH (a:Usuario {titulo:'"+nom_usuario+"'}), (b:Pelicula {titulo:'"+listaPelisPorGen[op1-1]+"'}) MERGE (a)-[r:has_rated{rating:'"+str(op2)+"'}]->(b)")
+
+        #viendo cuantos ratings tiene la peli para sacar un promedio
+        ratingsPorPeli = session.run("MATCH (a:Usuario)-[r:has_rated]->(b:Pelicula {titulo:'"+listaPelisPorGen[op1-1]+"'}) return r.rating")
+        listaRatingsPorPeli = [nodo["r.rating"] for nodo in ratingsPorPeli] 
+
+        #conviertiendo todos los elementos a float
+        listaRatingsPorPeli = [float(item) for item in listaRatingsPorPeli]
+        
+
+        #definir el metodo de promedio
+        def Promedio(lst):
+            return sum(lst) / len(lst)
+
+        #encontrar promedio de la lista
+        promedio = Promedio(listaRatingsPorPeli)
+
+        print("\nEl nuevo promedio de "+listaPelisPorGen[op1-1]+" es de: " +str(promedio)+".")
+        print("Gracias por tu rating, esto nos sirve mucho!")
 
     #empezando opcion2
     if opcion==2:
