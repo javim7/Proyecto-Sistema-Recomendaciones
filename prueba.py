@@ -15,6 +15,9 @@ graphdp = GraphDatabase.driver(uri="bolt://localhost:7687", auth=("neo4j","passw
 #iniciando la sesion
 session = graphdp.session()
 
+#crear = "CREATE (p:Genero {titulo:'Ciencia Ficcion'})"
+#cre = session.run(crear)
+
 #utilizando la operacion de retornar todos los nodos
 opRetornar="MATCH (p) return p"
 todos = session.run(opRetornar)
@@ -23,18 +26,19 @@ todos = session.run(opRetornar)
 for node in todos:
     print(node)
 
-print("\nque onda\n")
-
 #utilizando la operacion para solo retornar peliculas
 opPeliculas = "MATCH (p:Pelicula) return p.titulo"
 peliculas = session.run(opPeliculas)
 peliculass = []
 for node in peliculas:
     peliculass.append(node)
-    print(peliculass)
-
+    print(node)
 
 #empezando interaccion con el usuario
+nom_usuario = input("\nIngrese su nombre de usuario: ")
+
+print("\nBienvendio de vuelta", nom_usuario)
+
 opcion = 0
 #iniciar ciclo infinito con un while con las 5 opciones disponibles
 while True:
@@ -67,6 +71,6 @@ while True:
         #imprimir un par de mensajes
         print("\nGracias por utilizar nuestro servicio, vuelva pronto!")
         print("Finalizando Programa...")
-        print("Programa Finalizado\n\n")
+        print("Programa Finalizado\n")
         #salir del ciclo
         break
