@@ -1,8 +1,12 @@
-#Maria Fernanda Argueta, Javier Mombiela, Javier Valle
-#Proyecto Sistema de  Recomendaciones 
-#Seccion 10
-#Grupo 8
+"""
+Maria Fernanda Argueta, Javier Mombiela, Javier Valle
+Proyecto Sistema de  Recomendaciones 
+Seccion 10
+Grupo 8
 
+La funcion de este proyecto es poder hacer una conexion entre neo4j y python
+para asi poder extraer datos de neo4j y tambien poder meterle datos y modificarlos.
+"""
 #importando clases externas
 import pandas as pd
 import numpy as np
@@ -173,7 +177,7 @@ while True:
         listaRatingsPorPeli = [float(item) for item in listaRatingsPorPeli]
         
 
-        #encontrar promedio de la lista
+        #encontrar promedio de la lista utilizando el metodo definido anteriormente
         promedio = Promedio(listaRatingsPorPeli)
 
 
