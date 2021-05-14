@@ -52,6 +52,7 @@ def obtenerPersona(grapho):
 
 #definiendo la lista de los usuarios
 listaGen = obtenerPersona(session) 
+listaGen =sorted(listaGen)
 
 #persona = session.read_transaction(obtenerPersona)
 
@@ -93,7 +94,7 @@ while True:
     #empezando opcion1
     if opcion==1:
         print("\nSeleccione el genero que contiene la pelicula a recomendar:")
-        for number, genero in enumerate(sorted(listaGen)): #imprimiendo los generos como listado
+        for number, genero in enumerate(listaGen): #imprimiendo los generos como listado
             print(number+1, genero)
 
     #haciendo un while para asegurar que se elija la opcion correcta
@@ -115,8 +116,9 @@ while True:
         #creando un listado de las peliculas correspondientes al genero
         pelisPorGen = session.run("MATCH (a:Pelicula)-[r:es_genero]->(b:Genero {titulo:'"+listaGen[op-1]+"'}) return a.titulo")
         listaPelisPorGen = [nodo["a.titulo"] for nodo in pelisPorGen]
+        listaPelisPorGen = sorted(listaPelisPorGen)
         
-        for number, pelicula in enumerate(sorted(listaPelisPorGen)): #imprimiendo los generos como listado
+        for number, pelicula in enumerate(listaPelisPorGen): #imprimiendo los generos como listado
             print(number+1, pelicula)
         print("\nSeleccione la pelicula a recomendar:")
 
