@@ -93,7 +93,7 @@ while True:
     #empezando opcion1
     if opcion==1:
         print("\nSeleccione el genero que contiene la pelicula a recomendar:")
-        for number, genero in enumerate(listaGen): #imprimiendo los generos como listado
+        for number, genero in enumerate(sorted(listaGen)): #imprimiendo los generos como listado
             print(number+1, genero)
 
     #haciendo un while para asegurar que se elija la opcion correcta
@@ -106,7 +106,7 @@ while True:
             except ValueError:
                 print('\nIngrese solo numeros!\n')
             #usar un if para asegurarnos que el usuario solo ponga un numero del 1-5    
-            if op >=1 and op <=5:
+            if op >=1 and op <=len(listaGen):
                 ops = True
             else:
                 print('\nIngrese valores solamente entre 1 y 5.\n')
@@ -116,7 +116,7 @@ while True:
         pelisPorGen = session.run("MATCH (a:Pelicula)-[r:es_genero]->(b:Genero {titulo:'"+listaGen[op-1]+"'}) return a.titulo")
         listaPelisPorGen = [nodo["a.titulo"] for nodo in pelisPorGen]
         
-        for number, pelicula in enumerate(listaPelisPorGen): #imprimiendo los generos como listado
+        for number, pelicula in enumerate(sorted(listaPelisPorGen)): #imprimiendo los generos como listado
             print(number+1, pelicula)
         print("\nSeleccione la pelicula a recomendar:")
 
@@ -173,7 +173,9 @@ while True:
         #encontrar promedio de la lista
         promedio = Promedio(listaRatingsPorPeli)
 
-        print("\nEl nuevo promedio de "+listaPelisPorGen[op1-1]+" es de: " +str(promedio)+".")
+
+        nuevoRating = session.run("MATCH (p:Pelicula {titulo:'"+listaPelisPorGen[op1-1]+"'}) set p.rating = '"+str(promedio)+"'")
+        print("\nEl nuevo rating de "+listaPelisPorGen[op1-1]+" es de: " +str(promedio)+".")
         print("Gracias por tu rating, esto nos sirve mucho!")
 
     #empezando opcion2
