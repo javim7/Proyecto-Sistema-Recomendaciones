@@ -67,10 +67,10 @@ nom_usuario = input("\nIngrese su nombre de usuario: ")
 
 #if para ver si el nombre de usuario ya es parta de la base de datos o no
 if nom_usuario in listaUs:
-    print("\nBienvendio de nuevo", nom_usuario+"!")
+    print("\nBienvendi@ de nuevo", nom_usuario+"!")
 else:
     crearUs = session.run("CREATE (p:Usuario {titulo:'"+nom_usuario+"'})") #agregando el nombre de usuario al nodo
-    print("\nBienvenido a la familia", nom_usuario,", ahora mismo te agregamos a la base de datos!")
+    print("\nBienvenid@ a la familia", nom_usuario,", ahora mismo te agregamos a la base de datos!")
 
 opcion = 0
 #iniciar ciclo infinito con un while con las 3 opciones disponibles
@@ -148,7 +148,7 @@ while True:
                 op2 = int(input("Rating> "))
             #usar un except para asegurarnos que si el usuario ingresa letras, el código no parara abruptamente    
             except ValueError:
-                print('\nIngrese solo numeros!\n')
+                print('\nIngrese solo numeros enteros!\n')
             #usar un if para asegurarnos que el usuario solo ponga un numero del 1-5    
             if op2 >=1 and op2 <=5:
                 ops2 = True
