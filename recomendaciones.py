@@ -20,11 +20,8 @@ programa.
 #establecer conexion con el uri, usuario y contrasena correctos
 graphdp = GraphDatabase.driver(uri="bolt://localhost:7687", auth=("neo4j","password"))
 
-#iniciando la sesion
+#iniciando la sesion de neo4j
 session = graphdp.session()
-
-#crear = "CREATE (p:Genero {titulo:'Ciencia Ficcion'})"
-#cre = session.run(crear)
 
 #defininiendo los nombres de usuarios y metiendolos a una lista
 def obtenerPersona(grapho):
@@ -34,6 +31,7 @@ def obtenerPersona(grapho):
 
 #definiendo la lista de los usuarios
 listaUs = obtenerPersona(session)    
+listaUs = sorted(listaUs)
 
 #defininiendo los nombres de las peliculas y metiendolas a una lista
 def obtenerPersona(grapho):
@@ -41,8 +39,9 @@ def obtenerPersona(grapho):
     lista = [nodo["p.titulo"] for nodo in nombresPelis]
     return lista
 
-#definiendo la lista de los usuarios
-listaPel = obtenerPersona(session)   
+#definiendo la lista de las peliculas
+listaPel = obtenerPersona(session)  
+listaPel = sorted(listaPel) 
 
 #defininiendo los nombres de los generos y metiendolos a una lista
 def obtenerPersona(grapho):
@@ -50,20 +49,26 @@ def obtenerPersona(grapho):
     lista = [nodo["p.titulo"] for nodo in nombresGeneros]
     return lista
 
-#definiendo la lista de los usuarios
+#definiendo la lista de los generos
 listaGen = obtenerPersona(session) 
 listaGen =sorted(listaGen)
 
-#persona = session.read_transaction(obtenerPersona)
+#definir el metodo de promedio
+def Promedio(lst):
+    return sum(lst) / len(lst)
+
 
 """
 Ya que tenemos toda la informacion del grafo almacenada en listas,
 podemos seguir con la interaccion del usuario y utilizar la informacion
 obtenida anteriormente para dar recomendaciones.
 """
+print("\n---------------Bienvenido a PelRec-----------------")
+print("Somos una comunidad, en la que juntos nos apoyamos\npara poder tener las mejores recomendaciones de\npeliculas paracada uno de nuestros usarios.")
+print("----------------------------------------------------- \n")
 
 #pidiendo nombre de usuario
-nom_usuario = input("\nIngrese su nombre de usuario: ")
+nom_usuario = input("\nPara iniciar, ingrese su nombre de usuario: ")
 
 #if para ver si el nombre de usuario ya es parta de la base de datos o no
 if nom_usuario in listaUs:
@@ -168,10 +173,6 @@ while True:
         listaRatingsPorPeli = [float(item) for item in listaRatingsPorPeli]
         
 
-        #definir el metodo de promedio
-        def Promedio(lst):
-            return sum(lst) / len(lst)
-
         #encontrar promedio de la lista
         promedio = Promedio(listaRatingsPorPeli)
 
@@ -187,7 +188,7 @@ while True:
     #iniciar opcion 3
     if opcion==3:
         #imprimir un par de mensajes
-        print("\nGracias por utilizar nuestro servicio, vuelva pronto!")
+        print("\nGracias por utilizar PelRec, vuelve pronto!")
         print("Finalizando Programa...")
         print("Programa Finalizado\n")
         #salir del ciclo
