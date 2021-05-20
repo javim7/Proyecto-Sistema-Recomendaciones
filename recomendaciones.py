@@ -33,7 +33,7 @@ def obtenerPersona(grapho):
     lista = [nodo["p.titulo"] for nodo in nombresUsuario]
     return lista
 
-#definiendo la lista de los usuarios
+#definiendo la lista de los usuarios y sortenado
 listaUs = obtenerPersona(session)    
 listaUs = sorted(listaUs)
 
@@ -43,7 +43,7 @@ def obtenerPersona(grapho):
     lista = [nodo["p.titulo"] for nodo in nombresPelis]
     return lista
 
-#definiendo la lista de las peliculas
+#definiendo la lista de las peliculas y sortenado
 listaPel = obtenerPersona(session)  
 listaPel = sorted(listaPel) 
 
@@ -53,7 +53,7 @@ def obtenerPersona(grapho):
     lista = [nodo["p.titulo"] for nodo in nombresGeneros]
     return lista
 
-#definiendo la lista de los generos
+#definiendo la lista de los generos y sortenado
 listaGen = obtenerPersona(session) 
 listaGen =sorted(listaGen)
 
@@ -67,8 +67,9 @@ Ya que tenemos toda la informacion del grafo almacenada en listas,
 podemos seguir con la interaccion del usuario y utilizar la informacion
 obtenida anteriormente para dar recomendaciones.
 """
+
 print("\n---------------Bienvenido a PelRec-----------------")
-print("Somos una comunidad, en la que juntos nos apoyamos\npara poder tener las mejores recomendaciones de\npeliculas paracada uno de nuestros usarios.")
+print("Somos una comunidad, en la que juntos nos apoyamos\npara poder tener las mejores recomendaciones de\npeliculas para cada uno de nuestros usarios.")
 print("----------------------------------------------------- \n")
 
 #pidiendo nombre de usuario
