@@ -1,9 +1,9 @@
 Titulo,Año,Duración,Rating,Genero
 (500) Days of Summer,2009,95,3.9,Romance
 10 Things I Hate About You,1999,137,3.7,Comedy
-1917.,2019,119,4.2,Drama
+1917,2019,119,4.2,Drama
 365 Days,2020,154,1.8,Romance
-47 Meters Down: Uncaged,2019,130,5.0,Horror
+47 Meters Down: Uncaged,2019,130,5,Horror
 A Walk to Remember,2002,101,3.7,Romance
 Alien,1979,157,4.2,Ciencia Ficcion
 An Inspector Calls ,2015,127,3.1,Drama
@@ -18,14 +18,14 @@ Cadaver ,2020,250,4.9,Horror
 Code 8,2019,138,3.6,Action
 Couples Retreat,2009,113,2.8,Comedy
 Crawl,2019,127,3.7,Horror
-CSI: Immortality,2015,127,3.8,Ciencia Ficción
+CSI: Immortality,2015,127,3.8,Ciencia Ficcion
 Deep Blue Sea ,2020,100,4.7,Horror
 Descendants ,2019,106,3.2,Drama
 Descendants 2,2017,111,3.3,Action
-Desperation,2006,131,4.8,Ciencia Ficción
+Desperation,2006,131,4.8,Ciencia Ficcion
 Division 19,2017,133,1.7,Ciencia Ficcion
-Don't blame the child,2016,105,3.3,Comedy
-Don't Go Breaking My Heart,2021,123,3.4,Comedy
+Dont blame the child,2016,105,3.3,Comedy
+Dont Go Breaking My Heart,2021,123,3.4,Comedy
 Dont Listen,2020,137,4.7,Horror
 Easy A,2010,132,3.5,Comedy
 Escape Room,2019,139,3.2,Horror
@@ -59,7 +59,7 @@ Jurassic World ,2015,124,3.5,Ciencia Ficcion
 Justice Is Mind,2013,233,2.8,Ciencia Ficcion
 Kingsman,2017,141,3.4,Action
 Last Man Standing,2011,121,4.9,Action
-Le Mans '66,2019,152,4.1,Action
+Le Mans 66,2019,152,4.1,Action
 Letters to Juliet,2010,95,3.3,Romance
 Limitless,2011,105,3.7,Ciencia Ficcion
 Line of Duty ,2012,100,4.4,Drama
@@ -78,10 +78,10 @@ Murder on the Home Front,2019,131,2.7,Horror
 Nerve,2016,136,3.3,Action
 Nomadland,2020,147,3.7,Drama
 OtherLife,2017,136,3.2,Drama
-Pan's Labryrinth,2006,158,4.1,Ciencia Ficcion
+Pans Labryrinth,2006,158,4.1,Ciencia Ficcion
 Passengers,2016,116,3.5,Drama
-Pride & Prejudice,2005,129,3.9,Romance
-Salting the Battlefield ,2014,133,3.0,Action
+Pride and Prejudice,2005,129,3.9,Romance
+Salting the Battlefield ,2014,133,3,Action
 Sharknado,2013,126,3.3,Action
 Sharknado 5: Global Swarming,2017,133,3.9,Adventure
 Sky High,2020,121,4.3,Action
@@ -89,7 +89,7 @@ Skyscraper,2018,142,2.9,Action
 Slenderman ,2018,136,3.2,Horror
 Star Wars Episode VIII - The Last Jedi ,2017,152,3.5,Ciencia Ficcion
 Stowaway,2021,156,2.8,Drama
-Tenet ,2020,230,3.7,Ciencia Ficción
+Tenet ,2020,230,3.7,Ciencia Ficcion
 Terminator 2: Judgement Day,1991,217,4.3,Ciencia Ficcion
 The Bad Seed ,2018,127,4.5,Horror
 The Break-Up,2006,106,2.9,Comedy
@@ -103,7 +103,7 @@ The First Purge ,2018,137,4.2,Horror
 The Gentlemen ,2019,113,3.9,Action
 The Great Gatsby,2013,143,3.6,Romance
 The Kissing Booth,2018,105,3,Romance
-The Last Skarknado: It's About Time,2018,126,3.5,Action
+The Last Skarknado: Its About Time,2018,126,3.5,Action
 The Last Song,2010,108,3,Romance
 The Missiles of October,1974,126,3.3,Horror
 The Notebook,2004,123,3.9,Romance
@@ -118,16 +118,16 @@ The Silence of The Lambs,1991,158,4.3,Drama
 The Tomorrow War,2021,170,3.2,Ciencia Ficcion 
 The Unholy,2021,139,2.6,Horror
 The Wedding Date,2005,90,3.1,Romance
-The Wizard of Lies,2017,233,3.4,Ciencia Ficción
-Things Heard & Seen ,2021,126,4.4,Adventure
+The Wizard of Lies,2017,233,3.4,Ciencia Ficcion
+Things Heard and Seen ,2021,126,4.4,Adventure
 Thor,2011,115,4.8,Action
-Thruth or Dare,2017,128,5.0,Horror
+Thruth or Dare,2017,128,5,Horror
 Thunder Force,2020,146,2.2,Ciencia Ficcion
 Titanic,1997,194,3.9,Romance
 To All the Boys I've Loved Before,2018,99,3.6,Romance
-Tod@s Caen,2019,120,2.5,Comedy
+Todos Caen,2019,120,2.5,Comedy
 Transformers ,2007,144,3.6,Action
-Twelve Years a Slave`,2013,160,4.1,Drama
+Twelve Years a Slave,2013,160,4.1,Drama
 Unaired Game of Thromes Prequel Pilot,2019,150,3.3,Ciencia Ficcion
 Underwater,2020,135,4.6,Horror
 Up,2009,96,4.1,Comedy
