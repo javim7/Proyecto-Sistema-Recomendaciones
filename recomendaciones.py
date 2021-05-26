@@ -33,6 +33,7 @@ simis = pd.read_csv("Similitudes.csv")
 rates = pd.read_csv("Ratings.csv")
 
 """ Este es el codigo que se utilizo solo una vez para poder pasar los datos de los csv a neo4j
+
 #obteniendo elementos de catalogo y metiendolos a listas
 titulos = []
 titulos.extend(catalogo['Titulo'].tolist())
@@ -140,21 +141,38 @@ else:
     print("\nBienvenid@ a la familia", nom_usuario,", ahora mismo te agregamos a la base de datos!")
 
 opcion = 0
+recommend = pd.read_csv("Recomendaciones.csv")
+
 #iniciar ciclo infinito con un while con las 3 opciones disponibles
 while True:
+
+    #vaciando el csv de recomendaciones en cada corrida para poder dar nuevas recomendaciones
+    recommend = open("Recomendaciones.csv", "w")
+    recommend.truncate()
+    recommend.close()
+
     opciones = False
     while not opciones:
+        print("\nMenu")
+        print("-----------------------")
+        print("[1] Recomendar        |")
+        print("-----------------------")
+        print("[2] Recomiendeme      |")
+        print("-----------------------")
+        print("[3] Editar Peliculas  |")
+        print("-----------------------")
+        print("[4] Salir             |")
+        print("-----------------------")
         try:
-            print("\nMenu \n1. Recomendar \n2. Recomiendeme \n3. salir \n")
             opcion = int(input("Opcion> "))
         #usar un except para asegurarnos que si el usuario ingresa letras, el código no parara abruptamente    
         except ValueError:
             print('\nIngrese solo numeros!\n')
         #usar un if para asegurarnos que el usuario solo ponga un numero del 1-3  
-        if opcion >=1 and opcion <=3:
+        if opcion >=1 and opcion <=4:
             opciones = True
         else:
-            print('\nIngrese valores solamente entre 1 y 3.\n')
+            print('\nIngrese valores solamente entre 1 y 4.\n')
 
 #empezando las opciones
 
@@ -247,8 +265,11 @@ while True:
     if opcion==2:
         print("adios")
 
-    #iniciar opcion 3
     if opcion==3:
+        print("adios")
+
+    #iniciar opcion 3
+    if opcion==4:
         #imprimir un par de mensajes
         print("\nGracias por utilizar PelRec, vuelve pronto!")
         print("Finalizando Programa...")
