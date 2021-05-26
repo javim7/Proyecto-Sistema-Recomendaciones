@@ -150,9 +150,6 @@ while True:
         recomend.readline() # leyendo solo primera fila para dejar los titulos de las colunas
         recomend.truncate(recomend.tell()) # eliminando todo lo demas
 
-    #agregnado encabezados al csv de recomendar
-    #Reccomend = pd.read_csv("Recomendaciones.csv")
-
     opciones = False
     while not opciones:
         print("\nMenu")
@@ -271,7 +268,7 @@ while True:
         
         op3 = 0
         ops3 = False
-        while not ops3:
+        while not ops3: #while para asegurar que ingresen una opcion valida
             print("\nQue quiere editar?")
             print("---------------------------------")
             print("[1] Quiero Agregar Una Pelicula |")
@@ -279,29 +276,36 @@ while True:
             print("[2] Quiero Eliminar Datos       |")
             print("---------------------------------")
             try:
-                opcion = int(input("Opcion> "))
+                op3 = int(input("Opcion> "))
             #usar un except para asegurarnos que si el usuario ingresa letras, el código no parara abruptamente    
             except ValueError:
                 print('\nIngrese solo numeros!\n')
             #usar un if para asegurarnos que el usuario solo ponga un numero del 1-3  
-            if opcion >=1 and opcion <=2:
+            if op3 >=1 and op3 <=2:
                 ops3 = True
             else:
                 print('\nIngrese valores solamente entre 1 y 2.\n')
 
         if op3 ==1:
-            tituloPeli = ""
+
+            tituloPeli = "" #inicializando el nombre de la peli como vacio para despues poder usarlo
             yaEsta = False
+            #while para que ingrese el nombre de una pelicula que no este en la base de datos
             while not yaEsta:
                 try:
-                    tituloPeli = input("\nIngrese el titulo de la pelicula a agregar:")
+                    tituloPeli = input("\nIngrese el titulo de la pelicula a agregar: ")
                 except ValueError:
-                    print("Ya esta en la base!")
-                if tituloPeli in listaPel:
+                    print("ya esta en la base!")
+                if tituloPeli not in listaPel: #viendo si la pelicula ya esta en la base de datos ono
                     yaEsta = True
                 else:
-                    print("\nEse titulo ya esta en la base de datos!\n")
+                    print("\nEse titulo ya esta en la base de datos!")
 
+            #continuando con la pedida de los datos de la pelicula
+            anoPel = int(input("\nIngrese el año en el que salio la pelicula: "))
+            duraPel = int(input("\nIngrese la duración de la pelicula sin signos (ej. 1:32 seria solo 132): "))
+            ratingPel = int(input("\nIngrese el rating de la pelicula (en su opinion y de 1-5): "))
+            generoPel = input("\nIngrese el genero de la pelicula: ")
 
         if op3 ==2:
             print("hola")
