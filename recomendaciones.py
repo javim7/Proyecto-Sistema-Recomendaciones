@@ -141,28 +141,30 @@ else:
     print("\nBienvenid@ a la familia", nom_usuario,", ahora mismo te agregamos a la base de datos!")
 
 opcion = 0
-recommend = pd.read_csv("Recomendaciones.csv")
 
 #iniciar ciclo infinito con un while con las 3 opciones disponibles
 while True:
 
     #vaciando el csv de recomendaciones en cada corrida para poder dar nuevas recomendaciones
-    recommend = open("Recomendaciones.csv", "w")
-    recommend.truncate()
-    recommend.close()
+    with open("Recomendaciones.csv", 'r+') as recomend:
+        recomend.readline() # leyendo solo primera fila para dejar los titulos de las colunas
+        recomend.truncate(recomend.tell()) # eliminando todo lo demas
+
+    #agregnado encabezados al csv de recomendar
+    #Reccomend = pd.read_csv("Recomendaciones.csv")
 
     opciones = False
     while not opciones:
         print("\nMenu")
-        print("-----------------------")
-        print("[1] Recomendar        |")
-        print("-----------------------")
-        print("[2] Recomiendeme      |")
-        print("-----------------------")
-        print("[3] Editar Peliculas  |")
-        print("-----------------------")
-        print("[4] Salir             |")
-        print("-----------------------")
+        print("----------------------------")
+        print("[1] Quiero Calificar       |")
+        print("----------------------------")
+        print("[2] Quiero Recomendaciones |")
+        print("----------------------------")
+        print("[3] Quiero Editar Datos    |")
+        print("----------------------------")
+        print("[4] Quiero Salir           |")
+        print("----------------------------")
         try:
             opcion = int(input("Opcion> "))
         #usar un except para asegurarnos que si el usuario ingresa letras, el código no parara abruptamente    
@@ -266,7 +268,43 @@ while True:
         print("adios")
 
     if opcion==3:
-        print("adios")
+        
+        op3 = 0
+        ops3 = False
+        while not ops3:
+            print("\nQue quiere editar?")
+            print("---------------------------------")
+            print("[1] Quiero Agregar Una Pelicula |")
+            print("---------------------------------")
+            print("[2] Quiero Eliminar Datos       |")
+            print("---------------------------------")
+            try:
+                opcion = int(input("Opcion> "))
+            #usar un except para asegurarnos que si el usuario ingresa letras, el código no parara abruptamente    
+            except ValueError:
+                print('\nIngrese solo numeros!\n')
+            #usar un if para asegurarnos que el usuario solo ponga un numero del 1-3  
+            if opcion >=1 and opcion <=2:
+                ops3 = True
+            else:
+                print('\nIngrese valores solamente entre 1 y 2.\n')
+
+        if op3 ==1:
+            tituloPeli = ""
+            yaEsta = False
+            while not yaEsta:
+                try:
+                    tituloPeli = input("\nIngrese el titulo de la pelicula a agregar:")
+                except ValueError:
+                    print("Ya esta en la base!")
+                if tituloPeli in listaPel:
+                    yaEsta = True
+                else:
+                    print("\nEse titulo ya esta en la base de datos!\n")
+
+
+        if op3 ==2:
+            print("hola")
 
     #iniciar opcion 3
     if opcion==4:
