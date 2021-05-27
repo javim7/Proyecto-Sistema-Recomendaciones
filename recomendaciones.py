@@ -309,37 +309,133 @@ while True:
                     print("\nEse titulo ya esta en la base de datos!")
 
             #continuando con la pedida de los datos de la pelicula
-            anoPel = int(input("\nIngrese el año en el que salio la pelicula: "))
-            duraPel = int(input("\nIngrese la duración de la pelicula sin signos (ej. 1:32 seria solo 132): "))
-            ratingPel = int(input("\nIngrese el rating de la pelicula (en su opinion y de 1-5): "))
+            anoPel=""
+            #while para que solo ingresen digitos y no strings
+            siEs = False
+            while not siEs:
+                try:
+                    anoPel = int(input("\nIngrese el año en el que salio la pelicula: "))
+                    it_is = True
+                except ValueError: #error por si se ingresa algun tipo de dato
+                    it_is = False
+                if it_is == True:
+                    siEs = True #saliendo del loop
+                else:
+                    print("\nSolo se aceptan numeros!")
+
+            duraPel = ""
+            #while para que solo ingresen digitos y no strings
+            siEs2 = False
+            while not siEs2:
+                try:
+                    duraPel = int(input("\nIngrese la duración de la pelicula sin signos (ej. 1:32 seria solo 132): "))
+                    it_is = True
+                except ValueError: #error por si se ingresa algun tipo de dato
+                    it_is = False
+                if it_is == True:
+                    siEs2 = True #saliendo del loop
+                else:
+                    print("\nSolo se aceptan numeros!")
+
+            ratingPel = ""
+            #while para que solo ingresen digitos y no strings
+            siEs3 = False
+            while not siEs3:
+                try:
+                    ratingPel = float(input("\nIngrese el rating de la pelicula (en su opinion y de 1-5): "))
+                    it_is = True
+                except ValueError: #error por si se ingresa algun tipo de dato
+                    it_is = False
+                if it_is == True:
+                    siEs3 = True #saliendo del loop
+                else:
+                    print("\nSolo se aceptan numeros!")
+
 
             print("\nSeleccione el genero que contiene la pelicula a recomendar:")
             for number, genero in enumerate(listaGen): #imprimiendo los generos como listado
                 print(number+1, genero)
 
         #haciendo un while para asegurar que se elija la opcion correcta
-            generoPel = 0
-            generoPels = False
-            while not generoPels:
+            opsgen = 0
+            opsgens = False
+            while not opsgens:
                 try:
-                    generoPel = int(input("\nGenero> "))
+                    opsgen = int(input("\nGenero> "))
                 #usar un except para asegurarnos que si el usuario ingresa letras, el código no parara abruptamente    
                 except ValueError:
                     print('\nIngrese solo numeros!\n')
                 #usar un if para asegurarnos que el usuario solo ponga un numero del 1-5    
-                if generoPel >=1 and generoPel <=len(listaGen):
-                    generoPels = True
+                if opsgen >=1 and opsgen <=len(listaGen):
+                    opsgens = True
                 else:
                     print('\nIngrese valores solamente entre 1 y 5.\n')
 
-            session.run("CREATE (p:Pelicula {titulo:'"+tituloPeli+"', duracion:'"+duraPel+"', año:'"+anoPel+"', rating:'"+ratingPel+"'})")
-            session.run("MATCH (a:Pelicula{titulo:'"+tituloPeli+"'}),(b:Genero{titulo:'"+generoPel+"'}) MERGE (a)-[r:es_genero]->(b)")
+            session.run("CREATE (p:Pelicula {titulo:'"+str(tituloPeli)+"', duracion:'"+str(duraPel)+"', año:'"+str(anoPel)+"', rating:'"+str(ratingPel)+"'})")
+            session.run("MATCH (a:Pelicula{titulo:'"+str(tituloPeli)+"'}),(b:Genero{titulo:'"+listaGen[opsgen-1]+"'}) MERGE (a)-[r:es_genero]->(b)")
 
 
-            print("\n"+tituloPeli+" se ha agregado a la base de datos! Muchas gracias" +nom_usuario+"!")
+            print("\n"+tituloPeli+" se ha agregado a la base de datos! Muchas gracias " +nom_usuario+"!")
 
         if op3 ==2:
-            print("hola")
+            
+            op4 = 0
+            ops4 = False
+            while not ops4: #while para asegurar que ingresen una opcion valida
+                print("\nQue quiere editar?")
+                print("-----------------------------------")
+                print("[1] Quiero Eiliminar una Pelicula |")
+                print("-----------------------------------")
+                print("[2] Quiero Eliminar un Usuario    |")
+                print("-----------------------------------")
+                try:
+                    op4 = int(input("Opcion> "))
+                #usar un except para asegurarnos que si el usuario ingresa letras, el código no parara abruptamente    
+                except ValueError:
+                    print('\nIngrese solo numeros!\n')
+                #usar un if para asegurarnos que el usuario solo ponga un numero del 1-3  
+                if op4 >=1 and op4 <=2:
+                    ops4 = True
+                else:
+                    print('\nIngrese valores solamente entre 1 y 2.\n')
+
+            if op4 ==1:
+                
+                tituloPeli2 = "" #inicializando el nombre de la peli como vacio para despues poder usarlo
+                yaEsta2 = False
+                #while para que ingrese el nombre de una pelicula que no este en la base de datos
+                while not yaEsta2:
+                    try:
+                        tituloPeli2 = input("\nIngrese el titulo de la pelicula a eliminar: ")
+                    except ValueError:
+                        print("ya esta en la base!")
+                    if tituloPeli2 in listaPel: #viendo si la pelicula esta en la base de datos ono
+                        yaEsta2 = True
+                    else:
+                        print("\nEse titulo no esta en la base de datos!")
+
+                session.run("MATCH (p:Pelicula {titulo: '"+tituloPeli2+"'}) DETACH DELETE p")
+
+                print("\n"+tituloPeli2+" se ha eliminado de la base de datos, gracias "+nom_usuario+"!")
+
+            if op4 == 2:
+                
+                usuarioBorrar = "" #inicializando el nombre de la peli como vacio para despues poder usarlo
+                yaEsta3 = False
+                #while para que ingrese el nombre de una pelicula que no este en la base de datos
+                while not yaEsta3:
+                    try:
+                        usuarioBorrar = input("\nIngrese el usuario a eliminar: ")
+                    except ValueError:
+                        print("ya esta en la base!")
+                    if usuarioBorrar in listaUs: #viendo si la pelicula esta en la base de datos ono
+                        yaEsta3 = True
+                    else:
+                        print("\nEse usuario no esta en la base de datos!")
+
+                session.run("MATCH (p:Usuario {titulo: '"+usuarioBorrar+"'}) DETACH DELETE p")
+
+                print("\n"+usuarioBorrar+" se ha eliminado de la base de datos, gracias "+nom_usuario+"!")
 
     #iniciar opcion 3
     if opcion==4:
