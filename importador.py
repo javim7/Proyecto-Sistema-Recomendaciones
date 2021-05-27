@@ -1,3 +1,11 @@
+"""
+Autores: Javier Valle, María Fernanda Argueta, Javier Mombiela
+Seccion 10
+Grupo 8
+
+Driver para poder ingresar los datos a la base de datos.
+
+"""
 #importando clases externas
 import pandas as pd
 import numpy as np
