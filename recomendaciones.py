@@ -32,12 +32,14 @@ catalogo = pd.read_csv("Peliculas.csv")
 simis = pd.read_csv("Similitudes.csv")
 rates = pd.read_csv("Ratings.csv")
 
+""" Este es el codigo que se utilizo solo una vez para poder pasar los datos de los csv a neo4j
+
 generos = ["Action","Ciencia Ficcion", "Comedy", "Drama","Horror","Romance"]
 
 for genero in generos:
     session.run("CREATE (p:Usuario {titulo:'"+generos[genero]+"'})")
 
-""" Este es el codigo que se utilizo solo una vez para poder pasar los datos de los csv a neo4j
+
 
 #obteniendo elementos de catalogo y metiendolos a listas
 titulos = []

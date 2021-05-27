@@ -21,7 +21,7 @@ rates = pd.read_csv("Ratings.csv")
 generos = ["Action","Ciencia Ficcion", "Comedy", "Drama","Horror","Romance"]
 
 for genero in generos:
-    session.run("CREATE (p:Genero {titulo:'"+generos[genero]+"'})")
+    session.run("CREATE (p:Genero {titulo:'"+genero+"'})")
 
 #obteniendo elementos de catalogo y metiendolos a listas
 titulos = []
