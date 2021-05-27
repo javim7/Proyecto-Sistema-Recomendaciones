@@ -269,7 +269,75 @@ while True:
 
     #empezando opcion2
     if opcion==2:
-        print("adios")
+        
+        opsent = 0
+        opsents = False
+        while not opsents: #while para asegurar que ingresen una opcion valida
+            print("\nComo te sientes hoy?")
+            print("--------------")
+            print("[1] Feliz    |")
+            print("--------------")
+            print("[2] Enojado  |")
+            print("--------------")
+            print("[3] Triste   |")
+            print("--------------")
+            try:
+                opsent = int(input("Opcion> "))
+            #usar un except para asegurarnos que si el usuario ingresa letras, el código no parara abruptamente    
+            except ValueError:
+                print('\nIngrese solo numeros!\n')
+            #usar un if para asegurarnos que el usuario solo ponga un numero del 1-3  
+            if opsent >=1 and opsent <=3:
+                opsents = True
+            else:
+                print('\nIngrese valores solamente entre 1 y 3.\n') 
+
+            #pasando la info de la lista a otra lista para poder editarla
+            listagen2 = []
+
+            #for loop para recorrer toda la lista
+            for genero in listaGen:
+                listagen2.append(genero)
+
+            #preguntando cual es el genero favorito
+            print("\nEscoge tu genero favorito:")
+
+            op4 = 0
+            ops4 = False
+            while not ops4:
+                try:
+                    op4 = int(input("\nGenero> "))
+                #usar un except para asegurarnos que si el usuario ingresa letras, el código no parara abruptamente    
+                except ValueError:
+                    print('\nIngrese solo numeros!\n')
+                #usar un if para asegurarnos que el usuario solo ponga un numero del 1-5    
+                if op4 >=1 and op4 <=len(listagen2):
+                    ops4 = True
+                else:
+                    print('\nIngrese valores solamente entre 1 y 5.\n')
+
+            #eliminando ese genero de la lista
+            listagen2.remove(listagen2[op4-1])
+
+            #preguntando por otro genero
+            print("\nAhora escoge tu segundo genero favorito:")
+
+            op5 = 0
+            ops5 = False
+            while not ops5:
+                try:
+                    op5 = int(input("\nGenero> "))
+                #usar un except para asegurarnos que si el usuario ingresa letras, el código no parara abruptamente    
+                except ValueError:
+                    print('\nIngrese solo numeros!\n')
+                #usar un if para asegurarnos que el usuario solo ponga un numero del 1-5    
+                if op5 >=1 and op5 <=len(listagen2):
+                    ops5 = True
+                else:
+                    print('\nIngrese valores solamente entre 1 y 5.\n')
+
+            #eliminando ese genero de la lista
+            listagen2.remove(listagen2[op5-1])
 
     if opcion==3:
         
