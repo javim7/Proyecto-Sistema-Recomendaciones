@@ -32,6 +32,11 @@ catalogo = pd.read_csv("Peliculas.csv")
 simis = pd.read_csv("Similitudes.csv")
 rates = pd.read_csv("Ratings.csv")
 
+generos = ["Action","Ciencia Ficcion", "Comedy", "Drama","Horror","Romance"]
+
+for genero in generos:
+    session.run("CREATE (p:Usuario {titulo:'"+generos[genero]+"'})")
+
 """ Este es el codigo que se utilizo solo una vez para poder pasar los datos de los csv a neo4j
 
 #obteniendo elementos de catalogo y metiendolos a listas
@@ -258,7 +263,7 @@ while True:
 
         nuevoRating = session.run("MATCH (p:Pelicula {titulo:'"+listaPelisPorGen[op1-1]+"'}) set p.rating = '"+str(promedio)+"'")
         print("\nEl nuevo rating de "+listaPelisPorGen[op1-1]+" es de: " +str(promedio)+".")
-        print("Gracias por tu rating, esto nos sirve mucho!")
+        print("Gracias por tu rating "+nom_usuario+", esto nos sirve mucho!")
 
     #empezando opcion2
     if opcion==2:
@@ -305,7 +310,31 @@ while True:
             anoPel = int(input("\nIngrese el año en el que salio la pelicula: "))
             duraPel = int(input("\nIngrese la duración de la pelicula sin signos (ej. 1:32 seria solo 132): "))
             ratingPel = int(input("\nIngrese el rating de la pelicula (en su opinion y de 1-5): "))
-            generoPel = input("\nIngrese el genero de la pelicula: ")
+
+            print("\nSeleccione el genero que contiene la pelicula a recomendar:")
+            for number, genero in enumerate(listaGen): #imprimiendo los generos como listado
+                print(number+1, genero)
+
+        #haciendo un while para asegurar que se elija la opcion correcta
+            generoPel = 0
+            generoPels = False
+            while not generoPels:
+                try:
+                    generoPel = int(input("\nGenero> "))
+                #usar un except para asegurarnos que si el usuario ingresa letras, el código no parara abruptamente    
+                except ValueError:
+                    print('\nIngrese solo numeros!\n')
+                #usar un if para asegurarnos que el usuario solo ponga un numero del 1-5    
+                if generoPel >=1 and generoPel <=len(listaGen):
+                    generoPels = True
+                else:
+                    print('\nIngrese valores solamente entre 1 y 5.\n')
+
+            session.run("CREATE (p:Pelicula {titulo:'"+tituloPeli+"', duracion:'"+duraPel+"', año:'"+anoPel+"', rating:'"+ratingPel+"'})")
+            session.run("MATCH (a:Pelicula{titulo:'"+tituloPeli+"'}),(b:Genero{titulo:'"+generoPel+"'}) MERGE (a)-[r:es_genero]->(b)")
+
+
+            print("\n"+tituloPeli+" se ha agregado a la base de datos! Muchas gracias" +nom_usuario+"!")
 
         if op3 ==2:
             print("hola")
