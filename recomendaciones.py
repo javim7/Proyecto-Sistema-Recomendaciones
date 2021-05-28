@@ -8,10 +8,11 @@ La funcion de este proyecto es poder hacer una conexion entre neo4j y python
 para asi poder extraer datos de neo4j y tambien poder meterle datos y modificarlos.
 """
 #importando clases externas
-import pandas as pd
+import random
 import numpy as np
-import matplotlib as plt
+import pandas as pd
 from py2neo import Graph
+import matplotlib as plt
 from neo4j import GraphDatabase
 
 """
@@ -153,9 +154,7 @@ opcion = 0
 while True:
 
     #vaciando el csv de recomendaciones en cada corrida para poder dar nuevas recomendaciones
-    with open("Recomendaciones.csv", 'r+') as recomend:
-        recomend.readline() # leyendo solo primera fila para dejar los titulos de las colunas
-        recomend.truncate(recomend.tell()) # eliminando todo lo demas
+    
 
     opciones = False
     while not opciones:
@@ -282,7 +281,7 @@ while True:
             print("[3] Triste   |")
             print("--------------")
             try:
-                opsent = int(input("Opcion> "))
+                opsent = int(input("Mood> "))
             #usar un except para asegurarnos que si el usuario ingresa letras, el código no parara abruptamente    
             except ValueError:
                 print('\nIngrese solo numeros!\n')
@@ -292,52 +291,234 @@ while True:
             else:
                 print('\nIngrese valores solamente entre 1 y 3.\n') 
 
-            #pasando la info de la lista a otra lista para poder editarla
-            listagen2 = []
+        #pasando la info de la lista a otra lista para poder editarla
+        listagen2 = []
 
-            #for loop para recorrer toda la lista
-            for genero in listaGen:
-                listagen2.append(genero)
+        #for loop para recorrer toda la lista
+        for genero in listaGen:
+            listagen2.append(genero)
 
-            #preguntando cual es el genero favorito
-            print("\nEscoge tu genero favorito:")
+        #preguntando cual es el genero favorito
+        print("\nEscoge tu genero favorito:")
+        for number, genero in enumerate(listagen2): #imprimiendo los generos como listado
+            print(number+1, genero)
 
-            op4 = 0
-            ops4 = False
-            while not ops4:
-                try:
-                    op4 = int(input("\nGenero> "))
-                #usar un except para asegurarnos que si el usuario ingresa letras, el código no parara abruptamente    
-                except ValueError:
-                    print('\nIngrese solo numeros!\n')
-                #usar un if para asegurarnos que el usuario solo ponga un numero del 1-5    
-                if op4 >=1 and op4 <=len(listagen2):
-                    ops4 = True
-                else:
-                    print('\nIngrese valores solamente entre 1 y 5.\n')
+        op4 = 0
+        ops4 = False
+        while not ops4:
+            try:
+                op4 = int(input("\nGenero> "))
+            #usar un except para asegurarnos que si el usuario ingresa letras, el código no parara abruptamente    
+            except ValueError:
+                print('\nIngrese solo numeros!\n')
+            #usar un if para asegurarnos que el usuario solo ponga un numero del 1-5    
+            if op4 >=1 and op4 <=len(listagen2):
+                ops4 = True
+            else:
+                print('\nIngrese valores solamente entre 1 y 5.\n')
 
-            #eliminando ese genero de la lista
-            listagen2.remove(listagen2[op4-1])
+        genero1 = listagen2[op4-1]
+        #eliminando ese genero de la lista
+        listagen2.remove(genero1)
 
-            #preguntando por otro genero
-            print("\nAhora escoge tu segundo genero favorito:")
+        #preguntando por otro genero
+        print("\nAhora escoge tu segundo genero favorito:")
+        for number, genero in enumerate(listagen2): #imprimiendo los generos como listado
+            print(number+1, genero)
 
-            op5 = 0
-            ops5 = False
-            while not ops5:
-                try:
-                    op5 = int(input("\nGenero> "))
-                #usar un except para asegurarnos que si el usuario ingresa letras, el código no parara abruptamente    
-                except ValueError:
-                    print('\nIngrese solo numeros!\n')
-                #usar un if para asegurarnos que el usuario solo ponga un numero del 1-5    
-                if op5 >=1 and op5 <=len(listagen2):
-                    ops5 = True
-                else:
-                    print('\nIngrese valores solamente entre 1 y 5.\n')
+        op5 = 0
+        ops5 = False
+        while not ops5:
+            try:
+                op5 = int(input("\nGenero> "))
+            #usar un except para asegurarnos que si el usuario ingresa letras, el código no parara abruptamente    
+            except ValueError:
+                print('\nIngrese solo numeros!\n')
+            #usar un if para asegurarnos que el usuario solo ponga un numero del 1-5    
+            if op5 >=1 and op5 <=len(listagen2):
+                ops5 = True
+            else:
+                print('\nIngrese valores solamente entre 1 y 5.\n')
 
-            #eliminando ese genero de la lista
-            listagen2.remove(listagen2[op5-1])
+        genero2 = listagen2[op5-1]
+        #eliminando ese genero de la lista
+        listagen2.remove(genero2)
+
+        #meter las peliculas del primer genero a una lista 
+        pelisgen1 = session.run("MATCH (a:Pelicula)-[r:es_genero]->(b:Genero {titulo:'"+genero1+"'}) return a.titulo")
+        listapelisgen1 = [nodo["a.titulo"] for nodo in pelisgen1]
+
+        randomgen1 = []
+        generos1 = []
+        #for para obtener 7 pelicula aleatorias y agregarlas a una nueva lista
+        for i in range (9):
+            peli = random.choice(listapelisgen1)
+            randomgen1.append(peli)
+            listapelisgen1.remove(peli)
+            generos1.append(genero1)
+
+        #creando listas para todas las propiedades de las peliculas
+        titulos1 = []
+        anos1 = []
+        duras1 = []
+        ratings1 = []
+        #for para poder obtener la informacion de la pelicula 
+        for pelicula in randomgen1:
+            titulo1 = pelicula
+            titulos1.append(titulo1)
+
+            ano1 = session.run("MATCH (p:Pelicula {titulo:'"+pelicula+"'}) return p.año")
+            anos2 = [nodo["p.año"] for nodo in ano1]
+            anon = anos2.pop(0)
+            anos1.append(anon)
+
+            dura1 = session.run("MATCH (p:Pelicula {titulo:'"+pelicula+"'}) return p.duracion")
+            duras2 = [nodo["p.duracion"] for nodo in dura1]
+            durax = duras2.pop(0)
+            duras1.append(durax)
+
+            rating1 = session.run("MATCH (p:Pelicula {titulo:'"+pelicula+"'}) return p.rating")
+            ratings2 = [nodo["p.rating"] for nodo in rating1]
+            rat = ratings2.pop(0)
+            ratings1.append(rat)  
+
+        pelisgen2 = session.run("MATCH (a:Pelicula)-[r:es_genero]->(b:Genero {titulo:'"+genero2+"'}) return a.titulo")
+        listapelisgen2 = [nodo["a.titulo"] for nodo in pelisgen2]
+
+        randomgen2 = []
+        generos2 = []
+        #for para obtener 7 pelicula aleatorias y agregarlas a una nueva lista
+        for i in range (7):
+            peli = random.choice(listapelisgen2)
+            randomgen2.append(peli)
+            listapelisgen2.remove(peli)
+            generos2.append(genero2)
+
+            #creando listas para todas las propiedades de las peliculas
+        titulos22 = []
+        anos22 = []
+        duras22 = []
+        ratings22 = []
+        #for para poder obtener la informacion de la pelicula 
+        for pelicula in randomgen2:
+            titulo22 = pelicula
+            titulos22.append(titulo22)
+
+            ano22 = session.run("MATCH (p:Pelicula {titulo:'"+pelicula+"'}) return p.año")
+            anos3 = [nodo["p.año"] for nodo in ano22]
+            anon = anos3.pop(0)
+            anos22.append(anon)
+
+            dura22 = session.run("MATCH (p:Pelicula {titulo:'"+pelicula+"'}) return p.duracion")
+            duras3 = [nodo["p.duracion"] for nodo in dura22]
+            durax = duras3.pop(0)
+            duras22.append(durax)
+
+            rating22 = session.run("MATCH (p:Pelicula {titulo:'"+pelicula+"'}) return p.rating")
+            ratings3 = [nodo["p.rating"] for nodo in rating22]
+            rat = ratings3.pop(0)
+            ratings22.append(rat)
+
+        #serie de ifs para ver cual sera el tercer genero basado en el estado de animo del usuario
+        if opsent ==1:
+            genero3 = "Comedy"
+
+        if opsent ==2:
+            genero3 = "Action"
+
+        if opsent ==3:
+            genero3 = "Romance"
+
+        pelisgen3 = session.run("MATCH (a:Pelicula)-[r:es_genero]->(b:Genero {titulo:'"+genero3+"'}) return a.titulo")
+        listapelisgen3 = [nodo["a.titulo"] for nodo in pelisgen3]
+
+        randomgen3 = []
+        generos3 = []
+        #for para obtener 7 pelicula aleatorias y agregarlas a una nueva lista
+        for i in range (5):
+            peli = random.choice(listapelisgen3)
+            randomgen3.append(peli)
+            listapelisgen3.remove(peli)
+            generos3.append(genero3)
+
+            #creando listas para todas las propiedades de las peliculas
+        titulos33 = []
+        anos33 = []
+        duras33 = []
+        ratings33 = []
+        #for para poder obtener la informacion de la pelicula 
+        for pelicula in randomgen3:
+            titulo33 = pelicula
+            titulos33.append(titulo33)
+
+            ano33 = session.run("MATCH (p:Pelicula {titulo:'"+pelicula+"'}) return p.año")
+            anos4 = [nodo["p.año"] for nodo in ano33]
+            anon = anos4.pop(0)
+            anos33.append(anon)
+
+            dura33 = session.run("MATCH (p:Pelicula {titulo:'"+pelicula+"'}) return p.duracion")
+            duras4 = [nodo["p.duracion"] for nodo in dura33]
+            durax = duras4.pop(0)
+            duras33.append(durax)
+
+            rating33 = session.run("MATCH (p:Pelicula {titulo:'"+pelicula+"'}) return p.rating")
+            ratings4 = [nodo["p.rating"] for nodo in rating33]
+            rat = ratings4.pop(0)
+            ratings33.append(rat)
+
+        #creando listas vacias para poder combinar ambos generos y recomendar al usuario
+        tits = []
+        ans = []
+        durs = []
+        rats = []
+        gens = []
+        for i in range(len(titulos1)):  #for para agregar toda la info del primer genero a sus listas
+            tits.append(titulos1[i])
+            ans.append(anos1[i])
+            durs.append(duras1[i])
+            rats.append(ratings1[i])
+            gens.append(generos1[i])
+
+        for i in range(len(titulos22)):  #for para agregar toda la info del segundo genero a sus listas
+            tits.append(titulos22[i])
+            ans.append(anos22[i])
+            durs.append(duras22[i])
+            rats.append(ratings22[i])
+            gens.append(generos2[i])
+
+        for i in range(len(titulos33)):  #for para agregar toda la info del segundo genero a sus listas
+            tits.append(titulos33[i])
+            ans.append(anos33[i])
+            durs.append(duras33[i])
+            rats.append(ratings33[i])
+            gens.append(generos3[i])
+                
+
+        #rec = pd.read_csv("Recomendaciones.csv")
+        #agregando diccionario de listas para poder agregar al csv
+        recos = { 'Titulo': tits,
+        'Año': ans,
+        'Duración': durs,
+        'Rating': rats,
+        'Genero': gens
+        }
+
+        #escribiendo encabezados del csv
+        df = pd.DataFrame(recos)
+
+        #pasando toda la info al archivo sorteado dependiendo del rating
+        df = df.sort_values(by=["Rating"], ascending=False)
+        df.to_csv("Recomendaciones.csv",index=False)
+
+        #imrpimiendo csv
+        print("\n\nEstas son las top recomendaciones para usted: ")
+        print(pd.read_csv("Recomendaciones.csv"))
+
+        #eliminando datos del csv para poder tener el archivo siempre limpio
+        with open("Recomendaciones.csv", 'r+') as recomend:
+            recomend.readline() # leyendo solo primera fila para dejar los titulos de las colunas
+            recomend.truncate(recomend.tell()) # eliminando todo lo demas
+                        
 
     if opcion==3:
         
@@ -450,7 +631,7 @@ while True:
             op4 = 0
             ops4 = False
             while not ops4: #while para asegurar que ingresen una opcion valida
-                print("\nQue quiere editar?")
+                print("\nQue quiere eliminar?")
                 print("-----------------------------------")
                 print("[1] Quiero Eiliminar una Pelicula |")
                 print("-----------------------------------")
