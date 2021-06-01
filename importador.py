@@ -15,7 +15,7 @@ from neo4j import GraphDatabase
 
 
 #establecer conexion con el uri, usuario y contrasena correctos
-graphdp = GraphDatabase.driver(uri="bolt://localhost:7687", auth=("neo4j","1234"))
+graphdp = GraphDatabase.driver(uri="bolt://localhost:7687", auth=("neo4j","password"))
 
 #iniciando la sesion de neo4j
 session = graphdp.session()
