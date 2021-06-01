@@ -351,7 +351,7 @@ while True:
         randomgen1 = []
         generos1 = []
         #for para obtener 7 pelicula aleatorias y agregarlas a una nueva lista
-        for i in range (9):
+        for i in range (7):
             peli = random.choice(listapelisgen1)
             randomgen1.append(peli)
             listapelisgen1.remove(peli)
@@ -388,7 +388,7 @@ while True:
         randomgen2 = []
         generos2 = []
         #for para obtener 7 pelicula aleatorias y agregarlas a una nueva lista
-        for i in range (7):
+        for i in range (5):
             peli = random.choice(listapelisgen2)
             randomgen2.append(peli)
             listapelisgen2.remove(peli)
@@ -435,7 +435,7 @@ while True:
         randomgen3 = []
         generos3 = []
         #for para obtener 7 pelicula aleatorias y agregarlas a una nueva lista
-        for i in range (5):
+        for i in range (3):
             peli = random.choice(listapelisgen3)
             randomgen3.append(peli)
             listapelisgen3.remove(peli)
@@ -511,7 +511,7 @@ while True:
         df.to_csv("Recomendaciones.csv",index=False)
 
         #imrpimiendo csv
-        print("\n\nEstas son las top recomendaciones para usted: ")
+        print("\n\nEstas son las top 15 recomendaciones para usted: ")
         print(pd.read_csv("Recomendaciones.csv"))
 
         #eliminando datos del csv para poder tener el archivo siempre limpio
